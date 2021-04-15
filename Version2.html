@@ -1,0 +1,55 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+
+<canvas id="myChart" width="360" height="155"></canvas>
+
+<script>
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Cape Canaveral AFS LC-40', 'Marshall Islands', 'Vandenberg AFB SLC-4E', 'Kennedy Space Center LC-39A'],
+        datasets: [{
+            label: 'Number of Missions at Site',
+            data: [30, 7, 3, 1],
+            backgroundColor: [
+                'rgba(230, 57, 70)',
+                'rgba(168, 218, 220)',
+                'rgba(69, 123, 157)',
+                'rgba(29, 53, 87)'
+                
+            ],
+            borderColor: [
+                'rgba(230, 57, 70)',
+                'rgba(168, 218, 220)',
+                'rgba(69, 123, 157)',
+                'rgba(29, 53, 87)',
+            ],
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+<p> </p>
+<style>
+div {
+  padding-top: 5px;
+  padding-right: 50px;
+  padding-bottom: 50px;
+  padding-left: 50px;
+}
+</style>
+
+<h2 style="text-align: center;">Time for some improvements</h2>
+
+<div>In this version of my chart I scaled the height and width to fit inside of the window. For clarification, the window I am basing my size off of is a MacBook Pro. If I were using a larger computer screen I might need to alter my height and width of my chart to fit that screen. I have also changed the bars to show more clearly which bar the user is hovering over by altering the opacity. Lastly I have added a footer that takes you back to my Weekly Assignment 7 home page where you can find links to all three charts for this assignment.</div>
+<footer>
+    <h3 style="text-align: center;"><a href="wa7.html">Back to Weekly Assignment 7</a></h3>
+</footer>
