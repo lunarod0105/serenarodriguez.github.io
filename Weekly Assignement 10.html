@@ -51,11 +51,14 @@
 			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
-				touch: true,
 				slideNumber: 'c/t',
 				// Learn about plugins: https://revealjs.com/plugins/
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});
+
+			Reveal.initialize({
+				touch:true
+			})
 
 			ReveL.configure({ccentered:true})
 		</script>	
