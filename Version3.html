@@ -8,7 +8,7 @@ var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Cape Canaveral AFS LC-40', 'Marshall Islands', 'Vandenberg AFB SLC-4E', 'Kennedy Space Center LC-39A'],
+        llabels: ['Cape Canaveral AFS LC-40', 'Marshall Islands', 'Vandenberg AFB SLC-4E', 'Kennedy Space Center LC-39A'],
         datasets: [{
             label: 'Number of Missions at Site',
             data: [30, 7, 3, 1],
@@ -28,6 +28,11 @@ var myChart = new Chart(ctx, {
             borderWidth: 1
         }]
     },
+    options: {
+        animation: {
+            duration: 1500,
+            easing: 'easeInBounce'
+        },
         scales: {
             yAxes: [{
                 ticks: {
@@ -48,9 +53,9 @@ div {
 }
 </style>
 
-<h2 style="text-align: center;">Time for some improvements</h2>
+<h2 style="text-align: center;">Interactivity Changes I made</h2>
 
-<div> Now nothing can be perfect on the first time so for my version 2 I adding some more elements to make my chart easier to read. First I wanted to make sure that the chart was scaled to fit inside of my web server. To do this i had to scale my chart! Casey Paul helped me find the widnow sizes for a macbook pro so that I would be able to rescale my chart.To make it a little more clear on what part of the chart you were hovering over I changed the colors to become more bold when you hover over a certain column. These small changes help improve how users are able to understand my visuals!</div>
+<div>In this final version of my chart I changed the opacity again to be a little lighter so when the user hovers over a bar it gets darker. I also changed the made the hover color much more opaque. Another cool feature is that when you click on my legend, all the data clears. When you click on the legend again, the data comes back! Isn't that neat? Lastly I added a little bounce action on my bars so make it more fun and interactive for the user.</div>
 <footer>
-    <h3 style="text-align: center;"><a href="Weekly Assignment7.html">Back to Weekly Assignment 7</a></h3>
+    <h3 style="text-align: center;"><a href="wa7.html">Back to Weekly Assignment 7</a></h3>
 </footer>
