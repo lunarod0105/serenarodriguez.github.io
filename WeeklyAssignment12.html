@@ -1,0 +1,296 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>wa12 </title>
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reset.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/theme/solarized.min.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/monokai.min.css" id="highlight-theme">
+
+		<!-- Loading Vega-->
+		<script src="https://cdn.jsdelivr.net/npm/vega@5.19.1"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.0.0"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.15.1"></script>
+
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>WA 11 - PENGUIN Visualizations</h3>
+					<p>Brought to you by me</p>
+					<p style="color:#565A5C">April 2021</p>
+					<img src="https://media.giphy.com/media/xUA7bbY8cTYHlzXyJq/giphy.gif">
+				</section>
+
+				<section>
+					<h2>Introduction </h2>
+					<p>In this slide deck, we will be looking at data from the peguin data we used in class. I just wanted to learn more about pengiuns, tbh. Sometimes I wish I could just waddle and slide away..... </p>
+				</section>
+
+
+				<section>
+					<section>
+						<h2>The first visualization</h2>
+						<p>here you can see the background and font are changed</p>
+						<!-- Your Vega div and script go here! -->
+						<div id="penguins-scatter"></div>
+						
+						<script type="text/javascript">
+						var spec = {
+							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/penguins.json"
+							},
+							"width":800,
+							"height":400,
+							"config":{
+								"font":"Monospace",
+								"background": "#fff9e5",
+								// "fontStyle":"italic"
+							},
+							"mark": "point",
+							"encoding": {
+								"x": {
+									"field": "Beak Length (mm)",
+									"type": "quantitative",
+									"scale": {"zero": false}
+								},
+								"y": {
+									"field": "Beak Depth (mm)",
+									"type": "quantitative",
+									"scale": {"zero": false}
+								},
+								"color": {
+									"field": "Species",
+									"type": "nominal"
+								},
+								"shape": {
+									"field": "Island",
+									"type": "nominal"
+								}
+							}	
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#penguins-scatter", spec, opt);
+						</script>
+					</section>
+
+					<section>
+						<h2>Interpretation of Visualization 1</h2>
+						<p>This graph? Actully <em>pretty cool.</em> The two axis are Beak Depth and Length, corresponding to the species and island of the penguin. The Adeline Penguins reside on the Torgersen and Dream island. Otherwise the other two penguins, Chinstrap and Gentoo reside on their own respective islands, Dream and Biscoe. Each pengiun has similar beak length and depth to their own species. The techincal aspect, includes a special monotone font and a custom background color to match the slide deck. </p>
+						</script>
+						</ul>
+
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>The second visualization</h2>
+						<p>This involves layering!</p>
+
+						<div id="vis-penguins-layer-line"></div>
+						<script type="text/javascript">
+						var spec = {
+							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/penguins.json"
+							},
+							"width":800,
+							"height":400,
+							"config":{
+								"font":"Monospace",
+								"background": "#fff9e5",
+							},
+							"layer":[{
+								"mark": "line",
+								"encoding":{
+									"x":{
+										"field":"Species",
+										"type":"nominal"
+									},
+									"y":{
+										"field":"Beak Length (mm)",
+										"type":"quantitative"
+									},
+									"color": {"value":"red"}
+								}
+							},{
+								"mark": "line",
+								"encoding":{
+									"x":{
+										"field":"Species",
+										"type":"nominal"
+									},
+									"y":{
+										"field":"Beak Depth (mm)",
+										"type":"quantitative"
+									},
+									"color": {"value":"green"}
+								}
+							},{
+								"mark": "line",
+								"encoding":{
+									"x":{
+										"field":"Species",
+										"type":"nominal"
+									},
+									"y":{
+										"field":"Flipper Length (mm)",
+										"type":"quantitative"
+									},
+									"color": {"value":"blue"}
+								}
+							}]
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-penguins-layer-line", spec, opt);
+						</script>
+					</section>
+
+					<section>
+						<h2>Interpretation</h2>
+						<p>Wow! What a fun layered graph we have! The three elements implimented in the graph are Beak Length, Beak Depth, and Flipper Length. As you can see, the flipper length is much longer than either the Beak Length or Depth. The Chinstrap Penguins seemingly have shorter flippers than their counterparts, but a longer Beak Depth. Almost as deep as the Gentoo Penguins. While this graph isn't perfect or completetly visually appealing, you can learn some new information from it. </p>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h2>CODEBLOCK 1</h2>
+						<h6>I added spaces to the 'div' and 'script' tag, so it would work within the 'code block'. One important thing to keep in mind here is that the color of the 'points' are based on the <em>species of the penguin</em>. Otherwise, you should be able to directly copy and paste into your html to work!</h6>
+					<pre><code data-trim data-noescape>
+						< div id="penguins-scatter">< /div>
+						< script type="text/javascript">
+						var spec = {
+							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/penguins.json"
+							},
+							"width":800,
+							"height":400,
+							"config":{
+								"font":"Monospace",
+								"background": "#fff9e5", // this is the custom background color
+							},
+							"mark": "point",
+							"encoding": {
+								"x": {
+									"field": "Beak Length (mm)",
+									"type": "quantitative",
+									"scale": {"zero": false}
+								},
+								"y": {
+									"field": "Beak Depth (mm)",
+									"type": "quantitative",
+									"scale": {"zero": false}
+								},
+								"color": { 
+									"field": "Species",
+									"type": "nominal"
+								},
+								"shape": {
+									"field": "Island",
+									"type": "nominal"
+								}
+							}	
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#penguins-scatter", spec, opt);
+						< /script>	
+						// this is the last line 
+						// no this is 
+
+					</code></pre>
+					</section>
+
+					<section>
+						<h2>CODEBLOCK 2</h2>
+						<p>just copy and paste this boy and you've got a line graph about penguins! don't forget to remove the spaces¡</p>
+					<pre><code data-trim data-noescape>
+< div id="vis-penguins-layer-line">< /div>
+< script type="text/javascript">
+var spec = {
+	"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+	"data": {
+		"url": "https://vega.github.io/vega-datasets/data/penguins.json" //check to make sure this data still works!
+	},
+	"width":800,
+	"height":400,
+	"config":{
+		"font":"Monospace",
+		"background": "#fff9e5", // custom background color
+	},
+	"layer":[{
+		"mark": "line",
+		"encoding":{
+			"x":{
+				"field":"Species",
+				"type":"nominal" // this is nominal data
+			},
+			"y":{
+				"field":"Beak Length (mm)",
+				"type":"quantitative"
+			},
+			"color": {"value":"red"}
+		}
+	},{
+		"mark": "line",
+		"encoding":{
+			"x":{
+				"field":"Species",
+				"type":"nominal"
+			},
+			"y":{
+				"field":"Beak Depth (mm)",
+				"type":"quantitative"
+			},
+			"color": {"value":"green"}
+		}
+	},{
+		"mark": "line",
+		"encoding":{
+			"x":{
+				"field":"Species",
+				"type":"nominal"
+			},
+			"y":{
+				"field":"Flipper Length (mm)",
+				"type":"quantitative"
+			}, 
+			"color": {"value":"blue"} // the blue is a bit bright, but I like it more than the grey
+		}
+	}]
+};
+var opt = {"renderer": "canvas", "actions": false};
+vegaEmbed("#vis-penguins-layer-line", spec, opt);
+< /script>				
+// this is the last line
+					</code></pre>
+					</section>
+
+			</div>
+		</div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/highlight.min.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: 'h/v',
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealHighlight ]
+			});
+		</script>
+	</body>
+</html>
