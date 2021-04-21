@@ -28,7 +28,8 @@
 				</section>
 
 				<section>
-					<img src="https://media.giphy.com/media/J5RB7fLysOoUY5E7Kf/giphy.gif">
+					<img src="https://media.giphy.com/media/6Q3M4BIK0lX44/giphy.gif">
+					<p> Abe please be nice while grading this I am very much struggling and trying my best </p>
 				</section>
 
 				<section>
@@ -55,6 +56,7 @@
 
 				<section>
 					<p>Now the next step is to begin filling in the variable specs with whatever chart data and spcifications you want!</p>
+					<img src="https://media.giphy.com/media/13N9PWCutfn6MM/giphy.gif">
 						<pre><code data-trim data-line-numbers=3><script type="text/template">
 								<div id="vis"></div>
 								<script type="text/javascript">
@@ -189,113 +191,70 @@
 					<div id="vis02"></div>
 					<script type="text/javascript">
 						var spec = {
-							  "$schema": "https://vega.github.io/schema/vega/v5.json",
-							  "description": "A basic line chart example.",
-							  "width": 800,
-							  "height": 500,
-							  "padding": 5,
+						  "$schema": "https://vega.github.io/schema/vega/v5.json",
+						  "description": "A choropleth map depicting U.S. unemployment rates by county in 2009.",
+						  "width": 960,
+						  "height": 500,
+						  "autosize": "none",
 
-							  "signals": [
-							    {
-							      "name": "interpolate",
-							      "value": "linear",
-							      "bind": {
-							        "input": "select",
-							        "options": [
-							          "basis",
-							          "cardinal",
-							          "catmull-rom",
-							          "linear",
-							          "monotone",
-							          "natural",
-							          "step",
-							          "step-after",
-							          "step-before"
-							        ]
-							      }
-							    }
-							  ],
+						  "data": [
+						    {
+						      "name": "unemp",
+						      "url": "data/unemployment.tsv",
+						      "format": {"type": "tsv", "parse": "auto"}
+						    },
+						    {
+						      "name": "counties",
+						      "url": "data/us-10m.json",
+						      "format": {"type": "topojson", "feature": "counties"},
+						      "transform": [
+						        { "type": "lookup", "from": "unemp", "key": "id", "fields": ["id"], "values": ["rate"] },
+						        { "type": "filter", "expr": "datum.rate != null" }
+						      ]
+						    }
+						  ],
 
-							  "data": [
-							    {
-							      "name": "table",
-							      "values": [
-							        {"x": 0, "y": 28, "c":0}, {"x": 0, "y": 20, "c":1},
-							        {"x": 1, "y": 43, "c":0}, {"x": 1, "y": 35, "c":1},
-							        {"x": 2, "y": 81, "c":0}, {"x": 2, "y": 10, "c":1},
-							        {"x": 3, "y": 19, "c":0}, {"x": 3, "y": 15, "c":1},
-							        {"x": 4, "y": 52, "c":0}, {"x": 4, "y": 48, "c":1},
-							        {"x": 5, "y": 24, "c":0}, {"x": 5, "y": 28, "c":1},
-							        {"x": 6, "y": 87, "c":0}, {"x": 6, "y": 66, "c":1},
-							        {"x": 7, "y": 17, "c":0}, {"x": 7, "y": 27, "c":1},
-							        {"x": 8, "y": 68, "c":0}, {"x": 8, "y": 16, "c":1},
-							        {"x": 9, "y": 49, "c":0}, {"x": 9, "y": 25, "c":1}
-							      ]
-							    }
-							  ],
+						  "projections": [
+						    {
+						      "name": "projection",
+						      "type": "albersUsa"
+						    }
+						  ],
 
-							  "scales": [
-							    {
-							      "name": "x",
-							      "type": "point",
-							      "range": "width",
-							      "domain": {"data": "table", "field": "x"}
-							    },
-							    {
-							      "name": "y",
-							      "type": "linear",
-							      "range": "height",
-							      "nice": true,
-							      "zero": true,
-							      "domain": {"data": "table", "field": "y"}
-							    },
-							    {
-							      "name": "color",
-							      "type": "ordinal",
-							      "range": "category",
-							      "domain": {"data": "table", "field": "c"}
-							    }
-							  ],
+						  "scales": [
+						    {
+						      "name": "color",
+						      "type": "quantize",
+						      "domain": [0, 0.15],
+						      "range": {"scheme": "blues", "count": 7}
+						    }
+						  ],
 
-							  "axes": [
-							    {"orient": "bottom", "scale": "x"},
-							    {"orient": "left", "scale": "y"}
-							  ],
+						  "legends": [
+						    {
+						      "fill": "color",
+						      "orient": "bottom-right",
+						      "title": "Unemployment",
+						      "format": "0.1%"
+						    }
+						  ],
 
-							  "marks": [
-							    {
-							      "type": "group",
-							      "from": {
-							        "facet": {
-							          "name": "series",
-							          "data": "table",
-							          "groupby": "c"
-							        }
-							      },
-							      "marks": [
-							        {
-							          "type": "line",
-							          "from": {"data": "series"},
-							          "encode": {
-							            "enter": {
-							              "x": {"scale": "x", "field": "x"},
-							              "y": {"scale": "y", "field": "y"},
-							              "stroke": {"scale": "color", "field": "c"},
-							              "strokeWidth": {"value": 2}
-							            },
-							            "update": {
-							              "interpolate": {"signal": "interpolate"},
-							              "strokeOpacity": {"value": 1}
-							            },
-							            "hover": {
-							              "strokeOpacity": {"value": 0.5}
-							            }
-							          }
-							        }
-							      ]
-							    }
-							  ]
-							};
+						  "marks": [
+						    {
+						      "type": "shape",
+						      "from": {"data": "counties"},
+						      "encode": {
+						        "enter": { "tooltip": {"signal": "format(datum.rate, '0.1%')"}},
+						        "update": { "fill": {"scale": "color", "field": "rate"} },
+						        "hover": { "fill": {"value": "red"} }
+						      },
+						      "transform": [
+						        { "type": "geoshape", "projection": "projection" }
+						      ]
+						    }
+						  ]
+						}
+
 	  				/* JSON dump of your chart's spec */
 						var opt = {"renderer": "canvas", "actions": false};  /* Options for the embedding */
 						vegaEmbed("#vis02", spec, opt);
@@ -308,8 +267,8 @@
 				</section>
 
 				<section>
-					<h3>Hopefully this helps!</h3>
-					<img src="https://media.giphy.com/media/J2rQiBIqEVHGUBhymN/giphy.gif">
+					<h3>Well I tried</h3>
+					<img src="https://media.giphy.com/media/tpwwhv1BLd31e/giphy.gif">
 				</section>
 
 				
