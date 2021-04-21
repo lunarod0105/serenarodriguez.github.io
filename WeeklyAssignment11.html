@@ -41,43 +41,47 @@ You're welcome to use any of the examples in the galleries for Vega-Lite (Links 
 					<p>Check out this cool visualization below!</p>
 		<div id="vis01"></div>
 		<script type="text/javascript">
-			  { 
-			  	"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-				 "description": "A bar graph showing what activites consume what percentage of the day.",
-				  "data": {
-				    "values": [
-				      {"Activity": "Sleeping", "Time": 8},
-				      {"Activity": "Eating", "Time": 2},
-				      {"Activity": "TV", "Time": 4},
-				      {"Activity": "Work", "Time": 8},
-				      {"Activity": "Exercise", "Time": 2}
-				    ]
-				  },
-				  "transform": [{
-				    "window": [{
-				      "op": "sum",
-				      "field": "Time",
-				      "as": "TotalTime"
-				    }],
-				    "frame": [null, null]
-				  },
-				  {
-				    "calculate": "datum.Time/datum.TotalTime * 100",
-				    "as": "PercentOfTotal"
-				  }],
-				  "height": {"step": 12},
-				  "mark": "bar",
-				  "encoding": {
-				    "x": {
-				      "field": "PercentOfTotal",
-				      "type": "quantitative",
-				      "title": "% of total Time"
-				    },
-				    "y": {"field": "Activity", "type": "nominal"}
-				  }
-				}
+			var spec ={
+			  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+			  "description": "A bar graph showing what activites consume what percentage of the day.",
+			  "data": {
+			    "values": [
+			      {"Activity": "Sleeping", "Time": 8},
+			      {"Activity": "Eating", "Time": 2},
+			      {"Activity": "TV", "Time": 4},
+			      {"Activity": "Work", "Time": 8},
+			      {"Activity": "Exercise", "Time": 2}
+			    ]
+			  },
+			  "transform": [{
+			    "window": [{
+			      "op": "sum",
+			      "field": "Time",
+			      "as": "TotalTime"
+			    }],
+			    "frame": [null, null]
+			  },
+			  {
+			    "calculate": "datum.Time/datum.TotalTime * 100",
+			    "as": "PercentOfTotal"
+			  }],
+			  "height": {"step": 12},
+			  "mark": "bar",
+			  "encoding": {
+			    "x": {
+			      "field": "PercentOfTotal",
+			      "type": "quantitative",
+			      "title": "% of total Time"
+			    },
+			    "y": {"field": "Activity", "type": "nominal"}
+			  }
+			}
+			
+			var opt = {"renderer": "canvas", "actions": false};  /* Options for the embedding */
+			vegaEmbed("#vis02", spec, opt);
+
 		</script>
-		<p>the interpretation for this graph is that it is a bar graph, it has a right-leaning skew. 'G' is an outlier. For code showing how this was completed, check out the next slide. </p>
+		<p>the interpretation... </p>
 				</section>
 
 				<section data-transition="fade">
