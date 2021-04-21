@@ -41,8 +41,8 @@ You're welcome to use any of the examples in the galleries for Vega-Lite (Links 
 					<p>Check out this cool visualization below!</p>
 		<div id="vis01"></div>
 		<script type="text/javascript">
-		var spec = {
-			  { "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+			  { 
+			  	"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 				 "description": "A bar graph showing what activites consume what percentage of the day.",
 				  "data": {
 				    "values": [
@@ -76,9 +76,6 @@ You're welcome to use any of the examples in the galleries for Vega-Lite (Links 
 				    "y": {"field": "Activity", "type": "nominal"}
 				  }
 				}
-
-		var opt = {"renderer": "canvas", "actions": false};  /* Options for the embedding */
-		vegaEmbed("#vis01", spec, opt);
 		</script>
 		<p>the interpretation for this graph is that it is a bar graph, it has a right-leaning skew. 'G' is an outlier. For code showing how this was completed, check out the next slide. </p>
 				</section>
