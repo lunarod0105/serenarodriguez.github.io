@@ -23,15 +23,16 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>
-					<h2>WA 11 - PENGUIN Visualizations</h3>
-					<p>Brought to you by me</p>
+					<h2>Weekly Assignment 12 Airports/h3>
+					<p>Serena Rodriguez</p>
 					<p style="color:#565A5C">April 2021</p>
-					<img src="https://media.giphy.com/media/xUA7bbY8cTYHlzXyJq/giphy.gif">
+					<img src="https://media.giphy.com/media/ZlRmaLNJgoRIA/giphy.gif">
 				</section>
 
 				<section>
-					<h2>Introduction </h2>
-					<p>In this slide deck, we will be looking at data from the peguin data we used in class. I just wanted to learn more about pengiuns, tbh. Sometimes I wish I could just waddle and slide away..... </p>
+					<h2>Let's get started! </h2>
+					<p>In this presentation we are going to be looking at plane data. In honor of me having to fly everywhere and anywhere in the past two weeks. </p>
+					<img src= "https://media.giphy.com/media/l1KVaj5UcbHwrBMqI/giphy.gif">
 				</section>
 
 
@@ -40,45 +41,79 @@
 						<h2>The first visualization</h2>
 						<p>here you can see the background and font are changed</p>
 						<!-- Your Vega div and script go here! -->
-						<div id="penguins-scatter"></div>
+						<div id="Airports Visualization"></div>
 						
 						<script type="text/javascript">
 						var spec = {
-							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-							"data": {
-								"url": "https://vega.github.io/vega-datasets/data/penguins.json"
-							},
-							"width":800,
-							"height":400,
-							"config":{
-								"font":"Monospace",
-								"background": "#fff9e5",
-								// "fontStyle":"italic"
-							},
-							"mark": "point",
-							"encoding": {
-								"x": {
-									"field": "Beak Length (mm)",
-									"type": "quantitative",
-									"scale": {"zero": false}
-								},
-								"y": {
-									"field": "Beak Depth (mm)",
-									"type": "quantitative",
-									"scale": {"zero": false}
-								},
-								"color": {
-									"field": "Species",
-									"type": "nominal"
-								},
-								"shape": {
-									"field": "Island",
-									"type": "nominal"
-								}
-							}	
-						};
+						  "$schema": "https://vega.github.io/schema/vega/v5.json",
+						  "description": "An example of a space-fulling radial layout for hierarchical data.",
+						  "width": 600,
+						  "height": 600,
+						  "padding": 5,
+						  "autosize": "none",
+
+						  "data": [
+						    {
+						      "name": "tree",
+						      "url": "https://vega.github.io/vega-datasets/data/airports.csv",
+						      "transform": [
+						        {
+						          "type": "stratify",
+						          "key": "id",
+						          "parentKey": "parent"
+						        },
+						        {
+						          "type": "partition",
+						          "field": "size",
+						          "sort": {"field": "value"},
+						          "size": [{"signal": "2 * PI"}, {"signal": "width / 2"}],
+						          "as": ["a0", "r0", "a1", "r1", "depth", "children"]
+						        }
+						      ]
+						    }
+						  ],
+
+						  "scales": [
+						    {
+						      "name": "color",
+						      "type": "ordinal",
+						      "domain": {"data": "tree", "field": "depth"},
+						      "range": {"scheme": "tableau20"}
+						    }
+						  ],
+
+						  "marks": [
+						    {
+						      "type": "arc",
+						      "from": {"data": "tree"},
+						      "encode": {
+						        "enter": {
+						          "x": {"signal": "width / 2"},
+						          "y": {"signal": "height / 2"},
+						          "fill": {"scale": "color", "field": "depth"},
+						          "tooltip": {"signal": "datum.name + (datum.size ? ', ' + datum.size + ' bytes' : '')"}
+						        },
+						        "update": {
+						          "startAngle": {"field": "a0"},
+						          "endAngle": {"field": "a1"},
+						          "innerRadius": {"field": "r0"},
+						          "outerRadius": {"field": "r1"},
+						          "stroke": {"value": "white"},
+						          "strokeWidth": {"value": 0.5},
+						          "zindex": {"value": 0}
+						        },
+						        "hover": {
+						          "stroke": {"value": "red"},
+						          "strokeWidth": {"value": 2},
+						          "zindex": {"value": 1}
+						        }
+						      }
+						    }
+						  ]
+						}
+
 						var opt = {"renderer": "canvas", "actions": false};
-						vegaEmbed("#penguins-scatter", spec, opt);
+						vegaEmbed("Airports Visualization", spec, opt);
 						</script>
 					</section>
 
