@@ -112,101 +112,98 @@
 					<div id="vis01"></div>
 					<script type="text/javascript">
 						var spec = {
-							  "$schema": "https://vega.github.io/schema/vega/v5.json",
-							  "description": "A basic bar chart example, with value labels shown upon mouse hover.",
-							  "width": 800,
-							  "height": 500,
-							  "padding": 5,
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "A basic area chart example.",
+  "width": 500,
+  "height": 200,
+  "padding": 5,
 
-							  "data": [
-							    {
-							      "name": "table",
-							      "values": [
-							        {"category": "A", "amount": 28},
-							        {"category": "B", "amount": 55},
-							        {"category": "C", "amount": 43},
-							        {"category": "D", "amount": 91},
-							        {"category": "E", "amount": 81},
-							        {"category": "F", "amount": 53},
-							        {"category": "G", "amount": 19},
-							        {"category": "H", "amount": 87}
-							      ]
-							    }
-							  ],
+  "signals": [
+    {
+      "name": "interpolate",
+      "value": "monotone",
+      "bind": {
+        "input": "select",
+        "options": [
+          "basis",
+          "cardinal",
+          "catmull-rom",
+          "linear",
+          "monotone",
+          "natural",
+          "step",
+          "step-after",
+          "step-before"
+        ]
+      }
+    }
+  ],
 
-							  "signals": [
-							    {
-							      "name": "tooltip",
-							      "value": {},
-							      "on": [
-							        {"events": "rect:mouseover", "update": "datum"},
-							        {"events": "rect:mouseout",  "update": "{}"}
-							      ]
-							    }
-							  ],
+  "data": [
+    {
+      "name": "table",
+      "values": [
+        {"u": 1,  "v": 28}, {"u": 2,  "v": 55},
+        {"u": 3,  "v": 43}, {"u": 4,  "v": 91},
+        {"u": 5,  "v": 81}, {"u": 6,  "v": 53},
+        {"u": 7,  "v": 19}, {"u": 8,  "v": 87},
+        {"u": 9,  "v": 52}, {"u": 10, "v": 48},
+        {"u": 11, "v": 24}, {"u": 12, "v": 49},
+        {"u": 13, "v": 87}, {"u": 14, "v": 66},
+        {"u": 15, "v": 17}, {"u": 16, "v": 27},
+        {"u": 17, "v": 68}, {"u": 18, "v": 16},
+        {"u": 19, "v": 49}, {"u": 20, "v": 15}
+      ]
+    }
+  ],
 
-							  "scales": [
-							    {
-							      "name": "xscale",
-							      "type": "band",
-							      "domain": {"data": "table", "field": "category"},
-							      "range": "width",
-							      "padding": 0.05,
-							      "round": true
-							    },
-							    {
-							      "name": "yscale",
-							      "domain": {"data": "table", "field": "amount"},
-							      "nice": true,
-							      "range": "height"
-							    }
-							  ],
+  "scales": [
+    {
+      "name": "xscale",
+      "type": "linear",
+      "range": "width",
+      "zero": false,
+      "domain": {"data": "table", "field": "u"}
+    },
+    {
+      "name": "yscale",
+      "type": "linear",
+      "range": "height",
+      "nice": true,
+      "zero": true,
+      "domain": {"data": "table", "field": "v"}
+    }
+  ],
 
-							  "axes": [
-							    { "orient": "bottom", "scale": "xscale" },
-							    { "orient": "left", "scale": "yscale" }
-							  ],
+  "axes": [
+    {"orient": "bottom", "scale": "xscale", "tickCount": 20},
+    {"orient": "left", "scale": "yscale"}
+  ],
 
-							  "marks": [
-							    {
-							      "type": "rect",
-							      "from": {"data":"table"},
-							      "encode": {
-							        "enter": {
-							          "x": {"scale": "xscale", "field": "category"},
-							          "width": {"scale": "xscale", "band": 1},
-							          "y": {"scale": "yscale", "field": "amount"},
-							          "y2": {"scale": "yscale", "value": 0}
-							        },
-							        "update": {
-							          "fill": {"value": "steelblue"}
-							        },
-							        "hover": {
-							          "fill": {"value": "red"}
-							        }
-							      }
-							    },
-							    {
-							      "type": "text",
-							      "encode": {
-							        "enter": {
-							          "align": {"value": "center"},
-							          "baseline": {"value": "bottom"},
-							          "fill": {"value": "#FFFFFF"}
-							        },
-							        "update": {
-							          "x": {"scale": "xscale", "signal": "tooltip.category", "band": 0.5},
-							          "y": {"scale": "yscale", "signal": "tooltip.amount", "offset": -2},
-							          "text": {"signal": "tooltip.amount"},
-							          "fillOpacity": [
-							            {"test": "datum === tooltip", "value": 0},
-							            {"value": 1}
-							          ]
-							        }
-							      }
-							    }
-							  ]
-							};
+  "marks": [
+    {
+      "type": "area",
+      "from": {"data": "table"},
+      "encode": {
+        "enter": {
+          "x": {"scale": "xscale", "field": "u"},
+          "y": {"scale": "yscale", "field": "v"},
+          "y2": {"scale": "yscale", "value": 0},
+          "fill": {"value": "steelblue"}
+        },
+        "update": {
+          "interpolate": {"signal": "interpolate"},
+          "fillOpacity": {"value": 1}
+        },
+        "hover": {
+          "fillOpacity": {"value": 0.5}
+        }
+      }
+    }
+  ]
+}
+
+
 	  				/* JSON dump of your chart's spec */
 						var opt = {"renderer": "canvas", "actions": false};  /* Options for the embedding */
 						vegaEmbed("#vis01", spec, opt);
