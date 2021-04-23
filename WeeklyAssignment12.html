@@ -91,7 +91,7 @@
 				<section>
 					<h2>Visualization One</h2>
 					<h3>Bar Chart</h3>
-					<p>Change colors, fonts, and font size</p>
+					<p>Change colors,and label positions</p>
 				</section>
 
 				<section>
@@ -100,38 +100,30 @@
 						
 						<script type="text/javascript">
 						var spec = {
-							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-							"width": 900,
-							"height": 600,
-							"config":{
-								"font":"Times New Roman"
-							},
-							"data": {
-								"url": "https://vega.github.io/vega-datasets/vega_datasets/_data/seattle-weather.csv"
-							},
-							"mark": {
-								"type":"bar",
-								"color":"blue"
-							},
-							"encoding": {
-								"x": {
-									"field": "date",
-									"type": "quantitative",
-									"title": "Date",
-									"axis": {
-										"titleFontSize": 20
-									}
-								},
-								"y": {
-									"field": "temp_max",
-									"type": "quantitative",
-									"title": "Max temperature",
-									"axis": {
-										"titleFontSize": 20
-									}
-								}
-							}
-						};
+						"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+						"height": {"step": 17},
+						"data": { "url": "https://vega.github.io/vega-datasets/data/airports.csv" },
+						"encoding": {
+						  "x": {"field": "state",
+						  "title":"State"},
+						  "y": {
+						    "aggregate": "count", "field": "state",
+						    "title": "Number of Airports"
+						    },
+						"color": { 
+						  "aggregate": "count", "field": "state",
+						    "title": "Number of Airports"}
+						  },
+						"mark":"bar",
+						"config": {
+						  "axis":{
+						    "labelFont":"timesnewroman",
+						    "titleFont":"timesnewroman",
+						    "titleFontSize": 15,
+						    "labelAngle": 0
+						  }
+						  }
+						}
 						var opt = {"renderer": "canvas", "actions": false};
 						vegaEmbed("#vis01-bars", spec, opt);
 						</script>
@@ -213,51 +205,42 @@
 						
 						<script type="text/javascript">
 						var spec = {
-
-							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-							"width": 600,
-							"height": 400,
-							"data": {
-							    "url": "https://vega.github.io/vega-datasets/data/disasters.csv"
-							},
-							"encoding": {
-							    "x": {
-							        "aggregate": "sum",
-							        "field": "Deaths",
-							        "title": "Number of Deaths",
-							        "type": "quantitative",
-							        "scale": {"type": "log"},
-							        "axis": {"tickCount": 5}
-							    },
-							    "y": {
-							        "field": "Entity",
-							        "type": "nominal",
-							        "sort": "-x"
-							    },
-							    "color": {
-							        "field": "Entity",
-							       "type": "nominal"
-							    }
-							},
-							"layer":[{
-							    "mark": "bar"
-							},{
-							    "mark": {
-							        "type": "text",
-							        "align": "left",
-							        "baseline": "middle",
-							        "dx": 5
-							    },
-							    "encoding": {
-							        "text": {
-							            "aggregate": "sum",
-							            "field": "Deaths",
-							            "type": "quantitative",
-							            "format": ",.0f"
-							        }
-							    }
-							}]
-						};
+						"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+						"height": {"step": 17},
+						"data": { "url": "https://vega.github.io/vega-datasets/data/airports.csv" },
+						"encoding": {
+						  "x": {"field": "state",
+						  "title":"State"},
+						  "y": {
+						    "aggregate": "count", "field": "state",
+						    "title": "Number of Airports"
+						    },
+						"color": { 
+						  "aggregate": "count", "field": "state",
+						    "title": "Number of Airports"}
+						  },
+						"layer": [{
+						    "mark": "bar" 
+						    },{
+						      "mark": {
+						      "type": "text",
+						      "align": "center",
+						      "baseline": "bottom",
+						      "dy": 0
+						    },
+						    "encoding": {
+						      "text": {"field": "state", "aggregate": "count"}
+						    }}],
+						 "config": {
+							 "axis":{
+						    "labelFont":"timesnewroman",
+						    "titleFont":"timesnewroman",
+						    "titleFontSize": 15,
+						    "labelAngle": 0
+						  }
+						  }
+						  
+						}
 						var opt = {"renderer": "canvas", "actions": false};
 						vegaEmbed("#disasters02", spec, opt);
 						</script>
